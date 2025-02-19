@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPE Library Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            background: #444;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 5px;
+            display: block;
+            border-left: 4px solid #ccc;
+            margin-bottom: 10px;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FPE Library Documentation</h1>
+    </header>
+
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#installation">Installation</a>
+        <a href="#usage">Usage</a>
+        <a href="#algorithm">Algorithm</a>
+     
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h2>1. Library Overview</h2>
+            <p>The Feature Probability-based Estimation (FPE) library helps identify the most important features in a dataset by calculating feature-wise probabilities. It is particularly useful for feature selection tasks to improve machine learning model performance by removing less significant features.</p>
+            <h3>Dataset Conditions</h3>
+            <ul>
+                <li><strong>Data Consistency:</strong> Each feature must consist of either entirely strings or entirely numeric values. Mixing types is not allowed.</li>
+                <li><strong>No Missing Data:</strong> No empty cells (e.g., NaN or blanks) should exist in the feature data.</li>
+                <li><strong>Uniform Data Type:</strong> All values within a single feature must follow the same data type.</li>
+                <li><strong>Target Column:</strong> The last column contains the target or label for the dataset. Works on labeled datasets only.</li>
+            </ul>
+        </section>
+
+        <section id="installation">
+            <h2>2. Installation</h2>
+            <p>Install the FPE library using pip:</p>
+            <code>pip install fpe-lib==0.1.2</code>
+        </section>
+
+        <section id="usage">
+            <h2>3. Usage</h2>
+            <h3>3.1 Importing the Library</h3>
+            <code>from fpe.fpe import fpefs</code>
+            
+            <h3>3.2 Input Dataset</h3>
+            <ul>
+                <li><strong>Features (X):</strong> All columns except the last one are considered features.</li>
+                <li><strong>Target (y):</strong> The last column is treated as the target variable.</li>
+            </ul>
+
+            <h3>3.3 Example Usage</h3>
+            <code>
+import pandas as pd
+from fpe.fpe import fpefs
+
+# Sample dataset
+data = pd.DataFrame({
+    'Feature1': [1, 2, 3, 4, 5],
+    'Feature2': ['A', 'B', 'A', 'B', 'C'],
+    'Target': [1, 0, 1, 0, 1]
+})
+
+# Apply FPEFS
+result = fpefs(data)
+
+# View results
+print(result)
+            </code>
+            <p>Output:</p>
+            <code>
+  Feature  Probability
+0  Feature1         0.75
+1  Feature2         0.75
+            </code>
+        </section>
+
+        <section id="algorithm">
+            <h2>4. Algorithmic Working</h2>
+            <h3>4.1 Steps of the Algorithm</h3>
+            <ol>
+                <li><strong>Initiation:</strong> Loads and splits the dataset into features (X) and target (y), ensuring proper data types and structure.</li>
+                <li><strong>Feature Normalization:</strong> Applies Min-Max scaling to numeric features, normalizing them to [0, 1].</li>
+                <li><strong>Group Rows by Unique Values:</strong> Groups feature values by indices and identifies corresponding target classes.</li>
+                <li><strong>Analyze Class Coverage:</strong> Evaluates the relationship between feature values and target classes to compute partial coverage.</li>
+                <li><strong>Compute Feature Probabilities:</strong> Assigns probability scores to features based on class separation ability.</li>
+                <li><strong>Return Probabilities:</strong> Outputs a DataFrame with feature names and their corresponding probabilities.</li>
+            </ol>
+        </section>
+
+      
+    </main>
+
+    <footer>
+        <p>&copy; 2025 FPE Library. All rights reserved.</p>
+    </footer>
+</body>
+</html>
